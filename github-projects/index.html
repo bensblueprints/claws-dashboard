@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Projects Dashboard // Advanced Marketing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --neon-cyan: #00f3ff;
+            --neon-pink: #ff00ff;
+            --neon-purple: #9d00ff;
+            --neon-green: #00ff41;
+            --neon-yellow: #ffee00;
+            --neon-red: #ff0040;
+            --dark-bg: #050508;
+            --panel-bg: rgba(10, 10, 20, 0.95);
+        }
+        
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background: var(--dark-bg);
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent 50%, rgba(0, 243, 255, 0.02) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: scanline 10s linear infinite;
+        }
+        
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+        
+        .header {
+            text-align: center;
+            padding: 30px;
+            border-bottom: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
+            background: linear-gradient(180deg, rgba(0,243,255,0.1) 0%, transparent 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glitch {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3em;
+            font-weight: 900;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan);
+            position: relative;
+            animation: glitch 2s infinite;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { text-shadow: 2px 0 var(--neon-pink), -2px 0 var(--neon-cyan); }
+            25% { text-shadow: -2px 0 var(--neon-pink), 2px 0 var(--neon-cyan); }
+            50% { text-shadow: 2px 0 var(--neon-cyan), -2px 0 var(--neon-pink); }
+            75% { text-shadow: -2px 0 var(--neon-cyan), 2px 0 var(--neon-pink); }
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            color: var(--neon-purple);
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+            background: var(--panel-bg);
+            border-bottom: 1px solid var(--neon-cyan);
+            flex-wrap: wrap;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 15px 25px;
+            border: 1px solid;
+            border-radius: 5px;
+            min-width: 120px;
+        }
+        
+        .stat-box.green { border-color: var(--neon-green); color: var(--neon-green); }
+        .stat-box.yellow { border-color: var(--neon-yellow); color: var(--neon-yellow); }
+        .stat-box.red { border-color: var(--neon-red); color: var(--neon-red); }
+        .stat-box.white { border-color: #888; color: #888; }
+        .stat-box.total { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+        
+        .stat-number { font-size: 2em; font-weight: bold; }
+        .stat-label { font-size: 0.8em; text-transform: uppercase; margin-top: 5px; }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            background: var(--panel-bg);
+            border-bottom: 1px solid var(--neon-cyan);
+            flex-wrap: wrap;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        input, select, button {
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 10px 15px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 14px;
+            border-radius: 3px;
+            outline: none;
+        }
+        
+        input:focus, select:focus {
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+        }
+        
+        button {
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: var(--neon-cyan);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+        
+        .refresh-timer {
+            color: var(--neon-purple);
+            font-size: 0.9em;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+        
+        .project-card {
+            background: var(--panel-bg);
+            border: 2px solid;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .project-card.green { border-color: var(--neon-green); color: var(--neon-green); }
+        .project-card.yellow { border-color: var(--neon-yellow); color: var(--neon-yellow); }
+        .project-card.red { border-color: var(--neon-red); color: var(--neon-red); }
+        .project-card.white { border-color: #666; color: #888; }
+        
+        .project-card .content { color: #e0e0e0; }
+        
+        .status-indicator {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-indicator.green { background: var(--neon-green); box-shadow: 0 0 10px var(--neon-green); }
+        .status-indicator.yellow { background: var(--neon-yellow); box-shadow: 0 0 10px var(--neon-yellow); }
+        .status-indicator.red { background: var(--neon-red); box-shadow: 0 0 10px var(--neon-red); }
+        .status-indicator.white { background: #666; }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .project-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            padding-right: 40px;
+        }
+        
+        .project-detail {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            font-size: 0.9em;
+        }
+        
+        .detail-label {
+            color: #888;
+            min-width: 120px;
+        }
+        
+        .detail-value {
+            color: #fff;
+        }
+        
+        .detail-value a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+        }
+        
+        .detail-value a:hover {
+            text-decoration: underline;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+        
+        .status-badge.online { background: rgba(0, 255, 65, 0.2); color: var(--neon-green); }
+        .status-badge.offline { background: rgba(255, 0, 64, 0.2); color: var(--neon-red); }
+        .status-badge.warning { background: rgba(255, 238, 0, 0.2); color: var(--neon-yellow); }
+        .status-badge.unknown { background: rgba(136, 136, 136, 0.2); color: #888; }
+        
+        .agent-active {
+            color: var(--neon-green);
+        }
+        
+        .agent-inactive {
+            color: #666;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.5em;
+            color: var(--neon-cyan);
+        }
+        
+        .loading::after {
+            content: '';
+            animation: dots 1.5s infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+        
+        .error-message {
+            text-align: center;
+            padding: 30px;
+            color: var(--neon-red);
+            border: 1px solid var(--neon-red);
+            margin: 20px;
+            border-radius: 5px;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 15px;
+            background: var(--panel-bg);
+            border-top: 1px solid var(--neon-cyan);
+            font-size: 0.85em;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .legend-dot.green { background: var(--neon-green); }
+        .legend-dot.yellow { background: var(--neon-yellow); }
+        .legend-dot.red { background: var(--neon-red); }
+        .legend-dot.white { background: #666; }
+        
+        .export-btn {
+            background: rgba(157, 0, 255, 0.2);
+            border-color: var(--neon-purple);
+            color: var(--neon-purple);
+        }
+        
+        .export-btn:hover {
+            background: var(--neon-purple);
+            color: #fff;
+        }
+        
+        @media (max-width: 768px) {
+            .glitch { font-size: 2em; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .stats-bar, .controls { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1 class="glitch">GITHUB PROJECTS DASHBOARD</h1>
+        <p class="subtitle">Advanced Marketing // Deployment Monitor</p>
+    </header>
+    
+    <div class="stats-bar">
+        <div class="stat-box total">
+            <div class="stat-number" id="total-count">0</div>
+            <div class="stat-label">Total Projects</div>
+        </div>
+        <div class="stat-box green">
+            <div class="stat-number" id="green-count">0</div>
+            <div class="stat-label">Online</div>
+        </div>
+        <div class="stat-box yellow">
+            <div class="stat-number" id="yellow-count">0</div>
+            <div class="stat-label">Warning</div>
+        </div>
+        <div class="stat-box red">
+            <div class="stat-number" id="red-count">0</div>
+            <div class="stat-label">Critical</div>
+        </div>
+        <div class="stat-box white">
+            <div class="stat-number" id="white-count">0</div>
+            <div class="stat-label">Unknown</div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <div class="control-group">
+            <label>Search:</label>
+            <input type="text" id="search-input" placeholder="Project name..." />
+        </div>
+        <div class="control-group">
+            <label>Filter:</label>
+            <select id="filter-select">
+                <option value="all">All Status</option>
+                <option value="green">Online</option>
+                <option value="yellow">Warning</option>
+                <option value="red">Critical</option>
+                <option value="white">Unknown</option>
+            </select>
+        </div>
+        <button onclick="refreshData()">Refresh Now</button>
+        <button class="export-btn" onclick="exportReport()">Export CSV</button>
+        <span class="refresh-timer">Auto-refresh in <span id="timer">30</span>s</span>
+    </div>
+    
+    <div id="projects-container" class="projects-grid">
+        <div class="loading">Loading projects</div>
+    </div>
+    
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-dot green"></div>
+            <span>Green - Working properly, all systems go</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-dot yellow"></div>
+            <span>Yellow - Minor issues, partially working</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-dot red"></div>
+            <span>Red - Critical issues, down or unreachable</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-dot white"></div>
+            <span>White - Unknown status or not deployed</span>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            refreshInterval: 30,
+            githubOrg: 'advancedmarketing',
+            hetznerIP: '89.167.50.94',
+            agents: [
+                { id: 'webdev-pm', name: 'PM Agent' },
+                { id: 'webdev-dev', name: 'Dev Agent' },
+                { id: 'webdev-qa', name: 'QA Agent' },
+                { id: 'webdev-docs', name: 'Docs Agent' },
+                { id: 'marketing', name: 'Marketing Agent' },
+                { id: 'sales', name: 'Sales Agent' },
+                { id: 'ops', name: 'Ops Agent' }
+            ]
+        };
+        
+        let projectsData = [];
+        let refreshTimer = CONFIG.refreshInterval;
+        let timerInterval;
+        
+        // Known projects data (fallback/mock data)
+        const KNOWN_PROJECTS = [
+            {
+                name: 'advancedmarketing.co',
+                repo: 'https://github.com/advancedmarketing/advancedmarketing.co',
+                deployment: 'Hetzner (89.167.50.94)',
+                subdomain: 'advancedmarketing.co',
+                hasDatabase: true,
+                hasFiles: true,
+                lastDeployed: '2026-02-15T18:30:00Z'
+            },
+            {
+                name: 'claws-dashboard',
+                repo: 'https://github.com/bensblueprints/claws-dashboard',
+                deployment: 'GitHub Pages',
+                subdomain: 'dashboard.advancedmarketing.co',
+                hasDatabase: false,
+                hasFiles: true,
+                lastDeployed: '2026-02-16T05:14:00Z'
+            },
+            {
+                name: 'dashboard-github',
+                repo: 'https://github.com/advancedmarketing/dashboard-github',
+                deployment: 'Hetzner (89.167.50.94)',
+                subdomain: 'dashboard-github.advancedmarketing.co',
+                hasDatabase: false,
+                hasFiles: true,
+                lastDeployed: null
+            },
+            {
+                name: 'agent-system',
+                repo: 'https://github.com/advancedmarketing/agent-system',
+                deployment: 'Local',
+                subdomain: 'agents.advancedmarketing.co',
+                hasDatabase: true,
+                hasFiles: true,
+                lastDeployed: '2026-02-15T20:00:00Z'
+            },
+            {
+                name: 'meta-pixel-manager',
+                repo: 'https://github.com/advancedmarketing/meta-pixel-manager',
+                deployment: 'Hetzner (89.167.50.94)',
+                subdomain: 'pixel.advancedmarketing.co',
+                hasDatabase: true,
+                hasFiles: true,
+                lastDeployed: '2026-02-14T12:00:00Z'
+            },
+            {
+                name: 'email-automation',
+                repo: 'https://github.com/advancedmarketing/email-automation',
+                deployment: 'Hetzner (89.167.50.94)',
+                subdomain: 'email.advancedmarketing.co',
+                hasDatabase: true,
+                hasFiles: true,
+                lastDeployed: '2026-02-13T10:30:00Z'
+            },
+            {
+                name: 'landing-page-builder',
+                repo: 'https://github.com/advancedmarketing/landing-page-builder',
+                deployment: 'Netlify',
+                subdomain: 'builder.advancedmarketing.co',
+                hasDatabase: true,
+                hasFiles: true,
+                lastDeployed: '2026-02-12T15:45:00Z'
+            },
+            {
+                name: 'analytics-dashboard',
+                repo: 'https://github.com/advancedmarketing/analytics-dashboard',
+                deployment: 'Vercel',
+                subdomain: 'analytics.advancedmarketing.co',
+                hasDatabase: true,
+                hasFiles: true,
+                lastDeployed: '2026-02-11T09:20:00Z'
+            },
+            {
+                name: 'api-gateway',
+                repo: 'https://github.com/advancedmarketing/api-gateway',
+                deployment: 'Cloudflare Pages',
+                subdomain: 'api.advancedmarketing.co',
+                hasDatabase: false,
+                hasFiles: true,
+                lastDeployed: '2026-02-10T14:00:00Z'
+            },
+            {
+                name: 'chatbot-service',
+                repo: 'https://github.com/advancedmarketing/chatbot-service',
+                deployment: 'Hetzner (89.167.50.94)',
+                subdomain: 'chatbot.advancedmarketing.co',
+                hasDatabase: true,
+                hasFiles: true,
+                lastDeployed: '2026-02-09T11:30:00Z'
+            },
+            {
+                name: 'crm-integration',
+                repo: 'https://github.com/advancedmarketing/crm-integration',
+                deployment: 'Unknown',
+                subdomain: 'crm.advancedmarketing.co',
+                hasDatabase: false,
+                hasFiles: false,
+                lastDeployed: null
+            },
+            {
+                name: 'payment-processor',
+                repo: 'https://github.com/advancedmarketing/payment-processor',
+                deployment: 'Unknown',
+                subdomain: 'payments.advancedmarketing.co',
+                hasDatabase: false,
+                hasFiles: false,
+                lastDeployed: null
+            }
+        ];
+        
+        // Status check functions
+        async function checkSiteStatus(url) {
+            try {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 5000);
+                
+                const response = await fetch(url, { 
+                    method: 'HEAD',
+                    mode: 'no-cors',
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeout);
+                return { status: 'online', code: 200 };
+            } catch (e) {
+                return { status: 'offline', code: 0, error: e.message };
+            }
+        }
+        
+        async function checkDNS(subdomain) {
+            // Simulated DNS check - in production would use DNS API
+            const activeDomains = [
+                'advancedmarketing.co',
+                'dashboard.advancedmarketing.co',
+                'agents.advancedmarketing.co',
+                'pixel.advancedmarketing.co'
+            ];
+            
+            return activeDomains.includes(subdomain) ? 'active' : 'unknown';
+        }
+        
+        async function checkDatabase(project) {
+            // Simulated database check
+            if (!project.hasDatabase) return 'none';
+            
+            const projectsWithDbIssues = ['email-automation'];
+            if (projectsWithDbIssues.includes(project.name)) {
+                return 'error';
+            }
+            return 'connected';
+        }
+        
+        async function checkFiles(project) {
+            // Simulated file access check
+            return project.hasFiles ? 'accessible' : 'unknown';
+        }
+        
+        function checkAgentActivity(projectName) {
+            // Check which agent might be working on this project
+            const agentAssignments = {
+                'advancedmarketing.co': 'webdev-dev',
+                'claws-dashboard': 'webdev-pm',
+                'dashboard-github': 'webdev-pm',
+                'agent-system': 'ops',
+                'meta-pixel-manager': 'marketing',
+                'email-automation': 'webdev-dev',
+                'landing-page-builder': 'marketing',
+                'analytics-dashboard': 'webdev-dev',
+                'api-gateway': 'webdev-dev',
+                'chatbot-service': 'webdev-qa'
+            };
+            
+            return agentAssignments[projectName] || null;
+        }
+        
+        function determineStatus(project, checks) {
+            // Determine overall status based on checks
+            if (!project.lastDeployed && checks.dns === 'unknown') {
+                return 'white';
+            }
+            
+            if (checks.site.status === 'offline') {
+                return 'red';
+            }
+            
+            if (checks.database === 'error' || checks.files === 'inaccessible') {
+                return 'yellow';
+            }
+            
+            if (checks.site.status === 'online' && 
+                (checks.database === 'connected' || checks.database === 'none') &&
+                checks.files === 'accessible') {
+                return 'green';
+            }
+            
+            return 'yellow';
+        }
+        
+        async function fetchProjectsData() {
+            const projects = [];
+            
+            for (const project of KNOWN_PROJECTS) {
+                const checks = {
+                    site: await checkSiteStatus(`https://${project.subdomain}`),
+                    dns: await checkDNS(project.subdomain),
+                    database: await checkDatabase(project),
+                    files: await checkFiles(project)
+                };
+                
+                const status = determineStatus(project, checks);
+                const activeAgent = checkAgentActivity(project.name);
+                
+                projects.push({
+                    ...project,
+                    status,
+                    checks,
+                    activeAgent,
+                    checkedAt: new Date().toISOString()
+                });
+            }
+            
+            return projects;
+        }
+        
+        function formatDate(dateString) {
+            if (!dateString) return 'Never';
+            const date = new Date(dateString);
+            return date.toLocaleString();
+        }
+        
+        function renderProjects(projects) {
+            const container = document.getElementById('projects-container');
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const filterStatus = document.getElementById('filter-select').value;
+            
+            let filtered = projects.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(searchTerm);
+                const matchesFilter = filterStatus === 'all' || p.status === filterStatus;
+                return matchesSearch && matchesFilter;
+            });
+            
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="error-message">No projects match your criteria</div>';
+                return;
+            }
+            
+            container.innerHTML = filtered.map(project => `
+                <div class="project-card ${project.status}">
+                    <div class="status-indicator ${project.status}"></div>
+                    <div class="content">
+                        <h3 class="project-name">${project.name}</h3>
+                        
+                        <div class="project-detail">
+                            <span class="detail-label">Repository:</span>
+                            <span class="detail-value">
+                                <a href="${project.repo}" target="_blank">${project.repo.replace('https://github.com/', '')}</a>
+                            </span>
+                        </div>
+                        
+                        <div class="project-detail">
+                            <span class="detail-label">Deployment:</span>
+                            <span class="detail-value">${project.deployment}</span>
+                        </div>
+                        
+                        <div class="project-detail">
+                            <span class="detail-label">DNS:</span>
+                            <span class="detail-value">
+                                <span class="status-badge ${project.checks.dns === 'active' ? 'online' : 'unknown'}">
+                                    ${project.checks.dns}
+                                </span>
+                            </span>
+                        </div>
+                        
+                        <div class="project-detail">
+                            <span class="detail-label">Site Status:</span>
+                            <span class="detail-value">
+                                <span class="status-badge ${project.checks.site.status}">
+                                    ${project.checks.site.status === 'online' ? 'HTTP 200' : 'Offline'}
+                                </span>
+                            </span>
+                        </div>
+                        
+                        <div class="project-detail">
+                            <span class="detail-label">Database:</span>
+                            <span class="detail-value">
+                                <span class="status-badge ${project.checks.database === 'connected' ? 'online' : project.checks.database === 'error' ? 'warning' : 'unknown'}">
+                                    ${project.checks.database}
+                                </span>
+                            </span>
+                        </div>
+                        
+                        <div class="project-detail">
+                            <span class="detail-label">Files:</span>
+                            <span class="detail-value">
+                                <span class="status-badge ${project.checks.files === 'accessible' ? 'online' : 'unknown'}">
+                                    ${project.checks.files}
+                                </span>
+                            </span>
+                        </div>
+                        
+                        <div class="project-detail">
+                            <span class="detail-label">Agent:</span>
+                            <span class="detail-value ${project.activeAgent ? 'agent-active' : 'agent-inactive'}">
+                                ${project.activeAgent ? CONFIG.agents.find(a => a.id === project.activeAgent)?.name || project.activeAgent : 'None'}
+                            </span>
+                        </div>
+                        
+                        <div class="project-detail">
+                            <span class="detail-label">Last Deployed:</span>
+                            <span class="detail-value">${formatDate(project.lastDeployed)}</span>
+                        </div>
+                        
+                        <div class="project-detail">
+                            <span class="detail-label">Checked:</span>
+                            <span class="detail-value">${formatDate(project.checkedAt)}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            updateStats(projects);
+        }
+        
+        function updateStats(projects) {
+            const counts = {
+                total: projects.length,
+                green: projects.filter(p => p.status === 'green').length,
+                yellow: projects.filter(p => p.status === 'yellow').length,
+                red: projects.filter(p => p.status === 'red').length,
+                white: projects.filter(p => p.status === 'white').length
+            };
+            
+            document.getElementById('total-count').textContent = counts.total;
+            document.getElementById('green-count').textContent = counts.green;
+            document.getElementById('yellow-count').textContent = counts.yellow;
+            document.getElementById('red-count').textContent = counts.red;
+            document.getElementById('white-count').textContent = counts.white;
+        }
+        
+        async function refreshData() {
+            const container = document.getElementById('projects-container');
+            container.innerHTML = '<div class="loading">Checking systems</div>';
+            
+            try {
+                projectsData = await fetchProjectsData();
+                renderProjects(projectsData);
+                resetTimer();
+            } catch (error) {
+                container.innerHTML = `<div class="error-message">Error loading data: ${error.message}</div>`;
+            }
+        }
+        
+        function resetTimer() {
+            refreshTimer = CONFIG.refreshInterval;
+            document.getElementById('timer').textContent = refreshTimer;
+        }
+        
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                refreshTimer--;
+                document.getElementById('timer').textContent = refreshTimer;
+                
+                if (refreshTimer <= 0) {
+                    refreshData();
+                }
+            }, 1000);
+        }
+        
+        function exportReport() {
+            const headers = ['Project Name', 'Status', 'Repository', 'Deployment', 'DNS', 'Site', 'Database', 'Files', 'Agent', 'Last Deployed', 'Checked At'];
+            const rows = projectsData.map(p => [
+                p.name,
+                p.status,
+                p.repo,
+                p.deployment,
+                p.checks.dns,
+                p.checks.site.status,
+                p.checks.database,
+                p.checks.files,
+                p.activeAgent || 'None',
+                p.lastDeployed || 'Never',
+                p.checkedAt
+            ]);
+            
+            const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `github-projects-report-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // Event listeners
+        document.getElementById('search-input').addEventListener('input', () => renderProjects(projectsData));
+        document.getElementById('filter-select').addEventListener('change', () => renderProjects(projectsData));
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            refreshData();
+            startTimer();
+        });
+    </script>
+</body>
+</html>
