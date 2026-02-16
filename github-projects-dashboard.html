@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         :root {
             --neon-cyan: #00f3ff;
             --neon-pink: #ff00ff;
@@ -18,7 +17,6 @@
             --dark-bg: #050508;
             --panel-bg: rgba(10, 10, 20, 0.95);
         }
-        
         body {
             font-family: 'Share Tech Mono', monospace;
             background: var(--dark-bg);
@@ -30,26 +28,20 @@
                 linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
         }
-        
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(transparent 50%, rgba(0, 243, 255, 0.02) 50%);
             background-size: 100% 4px;
             pointer-events: none;
             z-index: 9999;
             animation: scanline 10s linear infinite;
         }
-        
         @keyframes scanline {
             0% { transform: translateY(0); }
             100% { transform: translateY(10px); }
         }
-        
         .header {
             text-align: center;
             padding: 30px;
@@ -59,7 +51,6 @@
             position: relative;
             overflow: hidden;
         }
-        
         .glitch {
             font-family: 'Orbitron', sans-serif;
             font-size: 3em;
@@ -69,14 +60,12 @@
             position: relative;
             animation: glitch 2s infinite;
         }
-        
         @keyframes glitch {
             0%, 100% { text-shadow: 2px 0 var(--neon-pink), -2px 0 var(--neon-cyan); }
             25% { text-shadow: -2px 0 var(--neon-pink), 2px 0 var(--neon-cyan); }
             50% { text-shadow: 2px 0 var(--neon-cyan), -2px 0 var(--neon-pink); }
             75% { text-shadow: -2px 0 var(--neon-cyan), 2px 0 var(--neon-pink); }
         }
-        
         .subtitle {
             font-size: 1.2em;
             color: var(--neon-purple);
@@ -84,7 +73,6 @@
             text-transform: uppercase;
             letter-spacing: 3px;
         }
-        
         .stats-bar {
             display: flex;
             justify-content: center;
@@ -94,7 +82,6 @@
             border-bottom: 1px solid var(--neon-cyan);
             flex-wrap: wrap;
         }
-        
         .stat-box {
             text-align: center;
             padding: 15px 25px;
@@ -102,16 +89,13 @@
             border-radius: 5px;
             min-width: 120px;
         }
-        
         .stat-box.green { border-color: var(--neon-green); color: var(--neon-green); }
         .stat-box.yellow { border-color: var(--neon-yellow); color: var(--neon-yellow); }
         .stat-box.red { border-color: var(--neon-red); color: var(--neon-red); }
         .stat-box.white { border-color: #888; color: #888; }
         .stat-box.total { border-color: var(--neon-cyan); color: var(--neon-cyan); }
-        
         .stat-number { font-size: 2em; font-weight: bold; }
         .stat-label { font-size: 0.8em; text-transform: uppercase; margin-top: 5px; }
-        
         .controls {
             display: flex;
             justify-content: center;
@@ -121,13 +105,11 @@
             border-bottom: 1px solid var(--neon-cyan);
             flex-wrap: wrap;
         }
-        
         .control-group {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        
         input, select, button {
             background: rgba(0, 243, 255, 0.1);
             border: 1px solid var(--neon-cyan);
@@ -138,28 +120,19 @@
             border-radius: 3px;
             outline: none;
         }
-        
-        input:focus, select:focus {
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
-        }
-        
+        input:focus, select:focus { box-shadow: 0 0 15px rgba(0, 243, 255, 0.5); }
         button {
             cursor: pointer;
             text-transform: uppercase;
             transition: all 0.3s;
         }
-        
-        button:hover {
+        button:hover:not(:disabled) {
             background: var(--neon-cyan);
             color: var(--dark-bg);
             box-shadow: 0 0 20px var(--neon-cyan);
         }
-        
-        .refresh-timer {
-            color: var(--neon-purple);
-            font-size: 0.9em;
-        }
-        
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .refresh-timer { color: var(--neon-purple); font-size: 0.9em; }
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
@@ -168,7 +141,6 @@
             max-width: 1800px;
             margin: 0 auto;
         }
-        
         .project-card {
             background: var(--panel-bg);
             border: 2px solid;
@@ -178,56 +150,39 @@
             transition: all 0.3s;
             overflow: hidden;
         }
-        
         .project-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
+            top: 0; left: 0; right: 0; height: 3px;
             background: linear-gradient(90deg, transparent, currentColor, transparent);
         }
-        
         .project-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        
         .project-card.green { border-color: var(--neon-green); color: var(--neon-green); }
         .project-card.yellow { border-color: var(--neon-yellow); color: var(--neon-yellow); }
         .project-card.red { border-color: var(--neon-red); color: var(--neon-red); }
         .project-card.white { border-color: #666; color: #888; }
-        
         .project-card .content { color: #e0e0e0; }
-        
         .status-indicator {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 20px;
-            height: 20px;
+            top: 15px; right: 15px;
+            width: 20px; height: 20px;
             border-radius: 50%;
             animation: pulse 2s infinite;
         }
-        
         .status-indicator.green { background: var(--neon-green); box-shadow: 0 0 10px var(--neon-green); }
         .status-indicator.yellow { background: var(--neon-yellow); box-shadow: 0 0 10px var(--neon-yellow); }
         .status-indicator.red { background: var(--neon-red); box-shadow: 0 0 10px var(--neon-red); }
         .status-indicator.white { background: #666; }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         .project-name {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.3em;
             margin-bottom: 15px;
             padding-right: 40px;
         }
-        
         .project-detail {
             display: flex;
             align-items: center;
@@ -235,25 +190,10 @@
             margin: 8px 0;
             font-size: 0.9em;
         }
-        
-        .detail-label {
-            color: #888;
-            min-width: 120px;
-        }
-        
-        .detail-value {
-            color: #fff;
-        }
-        
-        .detail-value a {
-            color: var(--neon-cyan);
-            text-decoration: none;
-        }
-        
-        .detail-value a:hover {
-            text-decoration: underline;
-        }
-        
+        .detail-label { color: #888; min-width: 120px; }
+        .detail-value { color: #fff; }
+        .detail-value a { color: var(--neon-cyan); text-decoration: none; }
+        .detail-value a:hover { text-decoration: underline; }
         .status-badge {
             display: inline-block;
             padding: 2px 8px;
@@ -261,38 +201,27 @@
             font-size: 0.8em;
             text-transform: uppercase;
         }
-        
         .status-badge.online { background: rgba(0, 255, 65, 0.2); color: var(--neon-green); }
         .status-badge.offline { background: rgba(255, 0, 64, 0.2); color: var(--neon-red); }
         .status-badge.warning { background: rgba(255, 238, 0, 0.2); color: var(--neon-yellow); }
         .status-badge.unknown { background: rgba(136, 136, 136, 0.2); color: #888; }
-        
-        .agent-active {
-            color: var(--neon-green);
-        }
-        
-        .agent-inactive {
-            color: #666;
-        }
-        
+        .agent-active { color: var(--neon-green); }
+        .agent-inactive { color: #666; }
         .loading {
             text-align: center;
             padding: 50px;
             font-size: 1.5em;
             color: var(--neon-cyan);
         }
-        
         .loading::after {
             content: '';
             animation: dots 1.5s infinite;
         }
-        
         @keyframes dots {
             0%, 20% { content: '.'; }
             40% { content: '..'; }
             60%, 100% { content: '...'; }
         }
-        
         .error-message {
             text-align: center;
             padding: 30px;
@@ -301,7 +230,6 @@
             margin: 20px;
             border-radius: 5px;
         }
-        
         .legend {
             display: flex;
             justify-content: center;
@@ -312,35 +240,62 @@
             font-size: 0.85em;
             flex-wrap: wrap;
         }
-        
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .legend-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-        
+        .legend-item { display: flex; align-items: center; gap: 8px; }
+        .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
         .legend-dot.green { background: var(--neon-green); }
         .legend-dot.yellow { background: var(--neon-yellow); }
         .legend-dot.red { background: var(--neon-red); }
         .legend-dot.white { background: #666; }
-        
         .export-btn {
             background: rgba(157, 0, 255, 0.2);
             border-color: var(--neon-purple);
             color: var(--neon-purple);
         }
-        
-        .export-btn:hover {
+        .export-btn:hover:not(:disabled) {
             background: var(--neon-purple);
             color: #fff;
         }
-        
+        .load-more-container {
+            text-align: center;
+            padding: 40px;
+            grid-column: 1 / -1;
+        }
+        .load-more-btn {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            background: rgba(0, 243, 255, 0.2);
+        }
+        .load-more-btn:hover:not(:disabled) { background: var(--neon-cyan); }
+        .all-loaded-message {
+            text-align: center;
+            padding: 30px;
+            color: var(--neon-green);
+            font-size: 1.1em;
+            grid-column: 1 / -1;
+        }
+        .spinner {
+            display: inline-block;
+            width: 20px; height: 20px;
+            border: 2px solid var(--neon-cyan);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .api-status {
+            position: fixed;
+            bottom: 20px; right: 20px;
+            padding: 10px 15px;
+            background: var(--panel-bg);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 5px;
+            font-size: 0.8em;
+            z-index: 1000;
+        }
+        .api-status.success { border-color: var(--neon-green); color: var(--neon-green); }
+        .api-status.error { border-color: var(--neon-red); color: var(--neon-red); }
+        .api-status.loading { border-color: var(--neon-yellow); color: var(--neon-yellow); }
         @media (max-width: 768px) {
             .glitch { font-size: 2em; }
             .projects-grid { grid-template-columns: 1fr; }
@@ -351,7 +306,7 @@
 <body>
     <header class="header">
         <h1 class="glitch">GITHUB PROJECTS DASHBOARD</h1>
-        <p class="subtitle">Advanced Marketing // Deployment Monitor</p>
+        <p class="subtitle">Advanced Marketing // All Repositories</p>
     </header>
     
     <div class="stats-bar">
@@ -392,13 +347,22 @@
                 <option value="white">Unknown</option>
             </select>
         </div>
+        <div class="control-group">
+            <label>Sort:</label>
+            <select id="sort-select">
+                <option value="name">Name</option>
+                <option value="status">Status</option>
+                <option value="updated">Last Updated</option>
+                <option value="pushed">Last Pushed</option>
+            </select>
+        </div>
         <button onclick="refreshData()">Refresh Now</button>
         <button class="export-btn" onclick="exportReport()">Export CSV</button>
-        <span class="refresh-timer">Auto-refresh in <span id="timer">30</span>s</span>
+        <span class="refresh-timer">Cache expires in <span id="timer">5:00</span></span>
     </div>
     
     <div id="projects-container" class="projects-grid">
-        <div class="loading">Loading projects</div>
+        <div class="loading">Loading repositories</div>
     </div>
     
     <div class="legend">
@@ -420,12 +384,17 @@
         </div>
     </div>
 
+    <div id="api-status" class="api-status loading">Loading GitHub API...</div>
+
     <script>
-        // Configuration
         const CONFIG = {
-            refreshInterval: 30,
-            githubOrg: 'advancedmarketing',
-            hetznerIP: '89.167.50.94',
+            githubUsername: 'bensblueprints',
+            perPage: 100,
+            initialLoad: 20,
+            loadMoreCount: 20,
+            cacheDuration: 5 * 60 * 1000,
+            statusCheckDelay: 100,
+            statusCheckConcurrency: 3,
             agents: [
                 { id: 'webdev-pm', name: 'PM Agent' },
                 { id: 'webdev-dev', name: 'Dev Agent' },
@@ -437,171 +406,165 @@
             ]
         };
         
-        let projectsData = [];
-        let refreshTimer = CONFIG.refreshInterval;
-        let timerInterval;
+        let allRepos = [];
+        let displayedRepos = [];
+        let filteredRepos = [];
+        let currentOffset = 0;
+        let isLoading = false;
+        let cacheTimestamp = null;
+        let statusCheckInterval = null;
+        let cacheTimerInterval = null;
         
-        // Known projects data (fallback/mock data)
-        const KNOWN_PROJECTS = [
-            {
-                name: 'advancedmarketing.co',
-                repo: 'https://github.com/advancedmarketing/advancedmarketing.co',
-                deployment: 'Hetzner (89.167.50.94)',
-                subdomain: 'advancedmarketing.co',
-                hasDatabase: true,
-                hasFiles: true,
-                lastDeployed: '2026-02-15T18:30:00Z'
-            },
-            {
-                name: 'claws-dashboard',
-                repo: 'https://github.com/bensblueprints/claws-dashboard',
-                deployment: 'GitHub Pages',
-                subdomain: 'dashboard.advancedmarketing.co',
-                hasDatabase: false,
-                hasFiles: true,
-                lastDeployed: '2026-02-16T05:14:00Z'
-            },
-            {
-                name: 'dashboard-github',
-                repo: 'https://github.com/advancedmarketing/dashboard-github',
-                deployment: 'Hetzner (89.167.50.94)',
-                subdomain: 'dashboard-github.advancedmarketing.co',
-                hasDatabase: false,
-                hasFiles: true,
-                lastDeployed: null
-            },
-            {
-                name: 'agent-system',
-                repo: 'https://github.com/advancedmarketing/agent-system',
-                deployment: 'Local',
-                subdomain: 'agents.advancedmarketing.co',
-                hasDatabase: true,
-                hasFiles: true,
-                lastDeployed: '2026-02-15T20:00:00Z'
-            },
-            {
-                name: 'meta-pixel-manager',
-                repo: 'https://github.com/advancedmarketing/meta-pixel-manager',
-                deployment: 'Hetzner (89.167.50.94)',
-                subdomain: 'pixel.advancedmarketing.co',
-                hasDatabase: true,
-                hasFiles: true,
-                lastDeployed: '2026-02-14T12:00:00Z'
-            },
-            {
-                name: 'email-automation',
-                repo: 'https://github.com/advancedmarketing/email-automation',
-                deployment: 'Hetzner (89.167.50.94)',
-                subdomain: 'email.advancedmarketing.co',
-                hasDatabase: true,
-                hasFiles: true,
-                lastDeployed: '2026-02-13T10:30:00Z'
-            },
-            {
-                name: 'landing-page-builder',
-                repo: 'https://github.com/advancedmarketing/landing-page-builder',
-                deployment: 'Netlify',
-                subdomain: 'builder.advancedmarketing.co',
-                hasDatabase: true,
-                hasFiles: true,
-                lastDeployed: '2026-02-12T15:45:00Z'
-            },
-            {
-                name: 'analytics-dashboard',
-                repo: 'https://github.com/advancedmarketing/analytics-dashboard',
-                deployment: 'Vercel',
-                subdomain: 'analytics.advancedmarketing.co',
-                hasDatabase: true,
-                hasFiles: true,
-                lastDeployed: '2026-02-11T09:20:00Z'
-            },
-            {
-                name: 'api-gateway',
-                repo: 'https://github.com/advancedmarketing/api-gateway',
-                deployment: 'Cloudflare Pages',
-                subdomain: 'api.advancedmarketing.co',
-                hasDatabase: false,
-                hasFiles: true,
-                lastDeployed: '2026-02-10T14:00:00Z'
-            },
-            {
-                name: 'chatbot-service',
-                repo: 'https://github.com/advancedmarketing/chatbot-service',
-                deployment: 'Hetzner (89.167.50.94)',
-                subdomain: 'chatbot.advancedmarketing.co',
-                hasDatabase: true,
-                hasFiles: true,
-                lastDeployed: '2026-02-09T11:30:00Z'
-            },
-            {
-                name: 'crm-integration',
-                repo: 'https://github.com/advancedmarketing/crm-integration',
-                deployment: 'Unknown',
-                subdomain: 'crm.advancedmarketing.co',
-                hasDatabase: false,
-                hasFiles: false,
-                lastDeployed: null
-            },
-            {
-                name: 'payment-processor',
-                repo: 'https://github.com/advancedmarketing/payment-processor',
-                deployment: 'Unknown',
-                subdomain: 'payments.advancedmarketing.co',
-                hasDatabase: false,
-                hasFiles: false,
-                lastDeployed: null
-            }
-        ];
-        
-        // Status check functions
-        async function checkSiteStatus(url) {
+        function getCache() {
             try {
-                const controller = new AbortController();
-                const timeout = setTimeout(() => controller.abort(), 5000);
-                
-                const response = await fetch(url, { 
-                    method: 'HEAD',
-                    mode: 'no-cors',
-                    signal: controller.signal
-                });
-                
-                clearTimeout(timeout);
-                return { status: 'online', code: 200 };
+                const cached = localStorage.getItem('githubDashboardCache');
+                const timestamp = localStorage.getItem('githubDashboardCacheTime');
+                if (cached && timestamp) {
+                    const age = Date.now() - parseInt(timestamp);
+                    if (age < CONFIG.cacheDuration) {
+                        cacheTimestamp = parseInt(timestamp);
+                        return JSON.parse(cached);
+                    }
+                }
             } catch (e) {
-                return { status: 'offline', code: 0, error: e.message };
+                console.warn('Cache read error:', e);
+            }
+            return null;
+        }
+        
+        function setCache(data) {
+            try {
+                localStorage.setItem('githubDashboardCache', JSON.stringify(data));
+                localStorage.setItem('githubDashboardCacheTime', Date.now().toString());
+                cacheTimestamp = Date.now();
+            } catch (e) {
+                console.warn('Cache write error:', e);
             }
         }
         
-        async function checkDNS(subdomain) {
-            // Simulated DNS check - in production would use DNS API
-            const activeDomains = [
-                'advancedmarketing.co',
-                'dashboard.advancedmarketing.co',
-                'agents.advancedmarketing.co',
-                'pixel.advancedmarketing.co'
-            ];
-            
-            return activeDomains.includes(subdomain) ? 'active' : 'unknown';
-        }
-        
-        async function checkDatabase(project) {
-            // Simulated database check
-            if (!project.hasDatabase) return 'none';
-            
-            const projectsWithDbIssues = ['email-automation'];
-            if (projectsWithDbIssues.includes(project.name)) {
-                return 'error';
+        function clearCache() {
+            try {
+                localStorage.removeItem('githubDashboardCache');
+                localStorage.removeItem('githubDashboardCacheTime');
+                cacheTimestamp = null;
+            } catch (e) {
+                console.warn('Cache clear error:', e);
             }
-            return 'connected';
         }
         
-        async function checkFiles(project) {
-            // Simulated file access check
-            return project.hasFiles ? 'accessible' : 'unknown';
+        function startCacheTimer() {
+            if (cacheTimerInterval) clearInterval(cacheTimerInterval);
+            cacheTimerInterval = setInterval(() => {
+                if (!cacheTimestamp) {
+                    document.getElementById('timer').textContent = '5:00';
+                    return;
+                }
+                const elapsed = Date.now() - cacheTimestamp;
+                const remaining = Math.max(0, CONFIG.cacheDuration - elapsed);
+                const minutes = Math.floor(remaining / 60000);
+                const seconds = Math.floor((remaining % 60000) / 1000);
+                document.getElementById('timer').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                if (remaining === 0) clearCache();
+            }, 1000);
         }
         
-        function checkAgentActivity(projectName) {
-            // Check which agent might be working on this project
+        async function fetchGitHubRepos() {
+            updateApiStatus('loading', 'Fetching from GitHub...');
+            const repos = [];
+            let page = 1;
+            let hasMore = true;
+            const headers = { 'Accept': 'application/vnd.github.v3+json' };
+            
+            while (hasMore) {
+                try {
+                    const url = `https://api.github.com/users/${CONFIG.githubUsername}/repos?per_page=${CONFIG.perPage}&page=${page}&sort=updated&direction=desc`;
+                    const response = await fetch(url, { headers });
+                    
+                    if (!response.ok) {
+                        if (response.status === 403) {
+                            throw new Error('GitHub API rate limit exceeded. Please try again later.');
+                        }
+                        if (response.status === 404) {
+                            throw new Error(`User '${CONFIG.githubUsername}' not found.`);
+                        }
+                        throw new Error(`GitHub API error: ${response.status}`);
+                    }
+                    
+                    const pageRepos = await response.json();
+                    if (pageRepos.length === 0) {
+                        hasMore = false;
+                    } else {
+                        repos.push(...pageRepos);
+                        updateApiStatus('loading', `Fetched ${repos.length} repos...`);
+                        if (pageRepos.length < CONFIG.perPage) {
+                            hasMore = false;
+                        } else {
+                            page++;
+                        }
+                    }
+                    if (hasMore) await new Promise(r => setTimeout(r, 100));
+                } catch (error) {
+                    updateApiStatus('error', error.message);
+                    throw error;
+                }
+            }
+            
+            updateApiStatus('success', `Loaded ${repos.length} repositories`);
+            return repos;
+        }
+        
+        function transformRepo(githubRepo) {
+            let deployment = 'Unknown';
+            let subdomain = null;
+            
+            if (githubRepo.homepage) {
+                deployment = githubRepo.homepage;
+                try {
+                    const url = new URL(githubRepo.homepage);
+                    subdomain = url.hostname;
+                } catch (e) {
+                    subdomain = githubRepo.homepage;
+                }
+            } else if (githubRepo.has_pages) {
+                deployment = 'GitHub Pages';
+                subdomain = `${CONFIG.githubUsername}.github.io/${githubRepo.name}`;
+            }
+            
+            return {
+                id: githubRepo.id,
+                name: githubRepo.name,
+                fullName: githubRepo.full_name,
+                description: githubRepo.description,
+                repo: githubRepo.html_url,
+                deployment: deployment,
+                subdomain: subdomain,
+                private: githubRepo.private,
+                stars: githubRepo.stargazers_count,
+                forks: githubRepo.forks_count,
+                openIssues: githubRepo.open_issues_count,
+                language: githubRepo.language,
+                createdAt: githubRepo.created_at,
+                updatedAt: githubRepo.updated_at,
+                pushedAt: githubRepo.pushed_at,
+                hasPages: githubRepo.has_pages,
+                hasDatabase: githubRepo.name.toLowerCase().includes('db') || 
+                            githubRepo.name.toLowerCase().includes('api') ||
+                            githubRepo.name.toLowerCase().includes('backend'),
+                hasFiles: true,
+                topics: githubRepo.topics || [],
+                status: 'white',
+                checks: {
+                    site: { status: 'unknown', code: 0 },
+                    dns: 'unknown',
+                    database: 'unknown',
+                    files: 'unknown'
+                },
+                activeAgent: checkAgentActivity(githubRepo.name),
+                checkedAt: null
+            };
+        }
+        
+        function checkAgentActivity(repoName) {
             const agentAssignments = {
                 'advancedmarketing.co': 'webdev-dev',
                 'claws-dashboard': 'webdev-pm',
@@ -612,167 +575,250 @@
                 'landing-page-builder': 'marketing',
                 'analytics-dashboard': 'webdev-dev',
                 'api-gateway': 'webdev-dev',
-                'chatbot-service': 'webdev-qa'
+                'chatbot-service': 'webdev-qa',
+                'leadforge': 'marketing',
+                'lead-scraper': 'sales',
+                'social-automation': 'marketing',
+                'upwork-scraper': 'sales',
+                'web-design-landing': 'webdev-dev',
+                'webdev-agent': 'webdev-pm',
+                'docs': 'webdev-docs',
+                'documentation': 'webdev-docs'
             };
-            
-            return agentAssignments[projectName] || null;
+            if (agentAssignments[repoName]) return agentAssignments[repoName];
+            for (const [key, agent] of Object.entries(agentAssignments)) {
+                if (repoName.toLowerCase().includes(key.toLowerCase())) return agent;
+            }
+            return null;
         }
         
-        function determineStatus(project, checks) {
-            // Determine overall status based on checks
-            if (!project.lastDeployed && checks.dns === 'unknown') {
-                return 'white';
-            }
-            
-            if (checks.site.status === 'offline') {
-                return 'red';
-            }
-            
-            if (checks.database === 'error' || checks.files === 'inaccessible') {
-                return 'yellow';
-            }
-            
-            if (checks.site.status === 'online' && 
-                (checks.database === 'connected' || checks.database === 'none') &&
-                checks.files === 'accessible') {
-                return 'green';
-            }
-            
-            return 'yellow';
-        }
-        
-        async function fetchProjectsData() {
-            const projects = [];
-            
-            for (const project of KNOWN_PROJECTS) {
-                const checks = {
-                    site: await checkSiteStatus(`https://${project.subdomain}`),
-                    dns: await checkDNS(project.subdomain),
-                    database: await checkDatabase(project),
-                    files: await checkFiles(project)
-                };
-                
-                const status = determineStatus(project, checks);
-                const activeAgent = checkAgentActivity(project.name);
-                
-                projects.push({
-                    ...project,
-                    status,
-                    checks,
-                    activeAgent,
-                    checkedAt: new Date().toISOString()
+        async function checkSiteStatus(url) {
+            if (!url || url === 'Unknown') return { status: 'unknown', code: 0 };
+            try {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 5000);
+                const response = await fetch(url, { 
+                    method: 'HEAD',
+                    mode: 'no-cors',
+                    signal: controller.signal
                 });
+                clearTimeout(timeout);
+                return { status: 'online', code: 200 };
+            } catch (e) {
+                return { status: 'offline', code: 0, error: e.message };
             }
+        }
+        
+        function determineStatus(repo, checks) {
+            if (!repo.subdomain || repo.deployment === 'Unknown') return 'white';
+            if (checks.site.status === 'offline') return 'red';
+            if (checks.site.status === 'online') return 'green';
+            return 'white';
+        }
+        
+        async function checkRepoStatus(repo) {
+            const checks = {
+                site: await checkSiteStatus(repo.subdomain ? `https://${repo.subdomain}` : null),
+                dns: repo.subdomain ? 'active' : 'unknown',
+                database: repo.hasDatabase ? 'unknown' : 'none',
+                files: 'accessible'
+            };
+            const status = determineStatus(repo, checks);
+            return { ...repo, status, checks, checkedAt: new Date().toISOString() };
+        }
+        
+        function startLazyStatusChecking() {
+            if (statusCheckInterval) clearInterval(statusCheckInterval);
+            let index = 0;
+            const reposToCheck = [...allRepos];
+            statusCheckInterval = setInterval(async () => {
+                if (index >= reposToCheck.length) {
+                    clearInterval(statusCheckInterval);
+                    return;
+                }
+                const batch = reposToCheck.slice(index, index + CONFIG.statusCheckConcurrency);
+                const checkPromises = batch.map(async (repo) => {
+                    const updatedRepo = await checkRepoStatus(repo);
+                    const repoIndex = allRepos.findIndex(r => r.id === repo.id);
+                    if (repoIndex !== -1) allRepos[repoIndex] = updatedRepo;
+                    const displayedIndex = displayedRepos.findIndex(r => r.id === repo.id);
+                    if (displayedIndex !== -1) {
+                        displayedRepos[displayedIndex] = updatedRepo;
+                        updateRepoCard(updatedRepo);
+                    }
+                });
+                await Promise.all(checkPromises);
+                index += CONFIG.statusCheckConcurrency;
+                if (index % 10 === 0) updateStats(allRepos);
+            }, CONFIG.statusCheckDelay);
+        }
+        
+        function updateRepoCard(repo) {
+            const card = document.querySelector(`[data-repo-id="${repo.id}"]`);
+            if (card) {
+                card.className = `project-card ${repo.status}`;
+                const indicator = card.querySelector('.status-indicator');
+                if (indicator) indicator.className = `status-indicator ${repo.status}`;
+            }
+        }
+        
+        function filterAndSortRepos() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
+            const filterStatus = document.getElementById('filter-select').value;
+            const sortBy = document.getElementById('sort-select').value;
             
-            return projects;
+            filteredRepos = allRepos.filter(repo => {
+                const matchesSearch = !searchTerm || 
+                    repo.name.toLowerCase().includes(searchTerm) ||
+                    (repo.description && repo.description.toLowerCase().includes(searchTerm)) ||
+                    (repo.language && repo.language.toLowerCase().includes(searchTerm));
+                const matchesFilter = filterStatus === 'all' || repo.status === filterStatus;
+                return matchesSearch && matchesFilter;
+            });
+            
+            filteredRepos.sort((a, b) => {
+                switch (sortBy) {
+                    case 'name': return a.name.localeCompare(b.name);
+                    case 'status':
+                        const statusOrder = { green: 0, yellow: 1, red: 2, white: 3 };
+                        return statusOrder[a.status] - statusOrder[b.status];
+                    case 'updated': return new Date(b.updatedAt) - new Date(a.updatedAt);
+                    case 'pushed': return new Date(b.pushedAt || b.updatedAt) - new Date(a.pushedAt || a.updatedAt);
+                    default: return 0;
+                }
+            });
+            return filteredRepos;
         }
         
         function formatDate(dateString) {
             if (!dateString) return 'Never';
             const date = new Date(dateString);
-            return date.toLocaleString();
+            const now = new Date();
+            const diffMs = now - date;
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            if (diffDays === 0) {
+                const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+                if (diffHours === 0) {
+                    const diffMins = Math.floor(diffMs / (1000 * 60));
+                    return diffMins === 0 ? 'Just now' : `${diffMins}m ago`;
+                }
+                return `${diffHours}h ago`;
+            }
+            if (diffDays === 1) return 'Yesterday';
+            if (diffDays < 7) return `${diffDays}d ago`;
+            if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
+            return date.toLocaleDateString();
         }
         
-        function renderProjects(projects) {
-            const container = document.getElementById('projects-container');
-            const searchTerm = document.getElementById('search-input').value.toLowerCase();
-            const filterStatus = document.getElementById('filter-select').value;
-            
-            let filtered = projects.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(searchTerm);
-                const matchesFilter = filterStatus === 'all' || p.status === filterStatus;
-                return matchesSearch && matchesFilter;
-            });
-            
-            if (filtered.length === 0) {
-                container.innerHTML = '<div class="error-message">No projects match your criteria</div>';
-                return;
-            }
-            
-            container.innerHTML = filtered.map(project => `
-                <div class="project-card ${project.status}">
-                    <div class="status-indicator ${project.status}"></div>
+        function renderRepoCard(repo) {
+            const agent = repo.activeAgent ? CONFIG.agents.find(a => a.id === repo.activeAgent) : null;
+            return `
+                <div class="project-card ${repo.status}" data-repo-id="${repo.id}">
+                    <div class="status-indicator ${repo.status}"></div>
                     <div class="content">
-                        <h3 class="project-name">${project.name}</h3>
-                        
+                        <h3 class="project-name">${repo.name}</h3>
+                        ${repo.description ? `<div class="project-detail"><span class="detail-value" style="color:#888;font-size:0.85em">${repo.description.substring(0, 80)}${repo.description.length > 80 ? '...' : ''}</span></div>` : ''}
                         <div class="project-detail">
                             <span class="detail-label">Repository:</span>
-                            <span class="detail-value">
-                                <a href="${project.repo}" target="_blank">${project.repo.replace('https://github.com/', '')}</a>
-                            </span>
+                            <span class="detail-value"><a href="${repo.repo}" target="_blank">${repo.fullName}</a></span>
                         </div>
-                        
+                        <div class="project-detail">
+                            <span class="detail-label">Language:</span>
+                            <span class="detail-value">${repo.language || 'N/A'}</span>
+                        </div>
                         <div class="project-detail">
                             <span class="detail-label">Deployment:</span>
-                            <span class="detail-value">${project.deployment}</span>
+                            <span class="detail-value">${repo.deployment}</span>
                         </div>
-                        
+                        ${repo.subdomain ? `
                         <div class="project-detail">
-                            <span class="detail-label">DNS:</span>
-                            <span class="detail-value">
-                                <span class="status-badge ${project.checks.dns === 'active' ? 'online' : 'unknown'}">
-                                    ${project.checks.dns}
-                                </span>
-                            </span>
-                        </div>
-                        
+                            <span class="detail-label">Site:</span>
+                            <span class="detail-value"><a href="https://${repo.subdomain}" target="_blank">${repo.subdomain}</a></span>
+                        </div>` : ''}
                         <div class="project-detail">
-                            <span class="detail-label">Site Status:</span>
-                            <span class="detail-value">
-                                <span class="status-badge ${project.checks.site.status}">
-                                    ${project.checks.site.status === 'online' ? 'HTTP 200' : 'Offline'}
-                                </span>
-                            </span>
+                            <span class="detail-label">Stars:</span>
+                            <span class="detail-value">⭐ ${repo.stars} | 🍴 ${repo.forks}</span>
                         </div>
-                        
-                        <div class="project-detail">
-                            <span class="detail-label">Database:</span>
-                            <span class="detail-value">
-                                <span class="status-badge ${project.checks.database === 'connected' ? 'online' : project.checks.database === 'error' ? 'warning' : 'unknown'}">
-                                    ${project.checks.database}
-                                </span>
-                            </span>
-                        </div>
-                        
-                        <div class="project-detail">
-                            <span class="detail-label">Files:</span>
-                            <span class="detail-value">
-                                <span class="status-badge ${project.checks.files === 'accessible' ? 'online' : 'unknown'}">
-                                    ${project.checks.files}
-                                </span>
-                            </span>
-                        </div>
-                        
                         <div class="project-detail">
                             <span class="detail-label">Agent:</span>
-                            <span class="detail-value ${project.activeAgent ? 'agent-active' : 'agent-inactive'}">
-                                ${project.activeAgent ? CONFIG.agents.find(a => a.id === project.activeAgent)?.name || project.activeAgent : 'None'}
-                            </span>
+                            <span class="detail-value ${agent ? 'agent-active' : 'agent-inactive'}">${agent ? agent.name : 'None'}</span>
                         </div>
-                        
                         <div class="project-detail">
-                            <span class="detail-label">Last Deployed:</span>
-                            <span class="detail-value">${formatDate(project.lastDeployed)}</span>
-                        </div>
-                        
-                        <div class="project-detail">
-                            <span class="detail-label">Checked:</span>
-                            <span class="detail-value">${formatDate(project.checkedAt)}</span>
+                            <span class="detail-label">Updated:</span>
+                            <span class="detail-value">${formatDate(repo.updatedAt)}</span>
                         </div>
                     </div>
                 </div>
-            `).join('');
-            
-            updateStats(projects);
+            `;
         }
         
-        function updateStats(projects) {
+        function renderProjects(repos, append = false) {
+            const container = document.getElementById('projects-container');
+            
+            if (!append) {
+                container.innerHTML = '';
+                displayedRepos = [];
+                currentOffset = 0;
+            }
+            
+            const reposToShow = repos.slice(currentOffset, currentOffset + CONFIG.loadMoreCount);
+            displayedRepos.push(...reposToShow);
+            currentOffset += reposToShow.length;
+            
+            const cardsHtml = reposToShow.map(renderRepoCard).join('');
+            
+            if (append) {
+                container.insertAdjacentHTML('beforeend', cardsHtml);
+            } else {
+                container.innerHTML = cardsHtml;
+            }
+            
+            renderLoadMoreButton(repos);
+            updateStats(allRepos);
+        }
+        
+        function renderLoadMoreButton(repos) {
+            const container = document.getElementById('projects-container');
+            const existingBtn = container.querySelector('.load-more-container, .all-loaded-message');
+            if (existingBtn) existingBtn.remove();
+            
+            if (currentOffset >= repos.length) {
+                if (repos.length > 0) {
+                    container.insertAdjacentHTML('beforeend', `
+                        <div class="all-loaded-message">
+                            ✓ All ${repos.length} repositories loaded
+                        </div>
+                    `);
+                }
+            } else {
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="load-more-container">
+                        <button class="load-more-btn" onclick="loadMore()" ${isLoading ? 'disabled' : ''}>
+                            ${isLoading ? '<span class="spinner"></span>Loading...' : `Load More (${repos.length - currentOffset} remaining)`}
+                        </button>
+                    </div>
+                `);
+            }
+        }
+        
+        function loadMore() {
+            if (isLoading) return;
+            isLoading = true;
+            renderLoadMoreButton(filteredRepos);
+            
+            setTimeout(() => {
+                isLoading = false;
+                renderProjects(filteredRepos, true);
+            }, 300);
+        }
+        
+        function updateStats(repos) {
             const counts = {
-                total: projects.length,
-                green: projects.filter(p => p.status === 'green').length,
-                yellow: projects.filter(p => p.status === 'yellow').length,
-                red: projects.filter(p => p.status === 'red').length,
-                white: projects.filter(p => p.status === 'white').length
+                total: repos.length,
+                green: repos.filter(p => p.status === 'green').length,
+                yellow: repos.filter(p => p.status === 'yellow').length,
+                red: repos.filter(p => p.status === 'red').length,
+                white: repos.filter(p => p.status === 'white').length
             };
             
             document.getElementById('total-count').textContent = counts.total;
@@ -782,52 +828,70 @@
             document.getElementById('white-count').textContent = counts.white;
         }
         
+        function updateApiStatus(type, message) {
+            const el = document.getElementById('api-status');
+            el.className = `api-status ${type}`;
+            el.textContent = message;
+        }
+        
         async function refreshData() {
-            const container = document.getElementById('projects-container');
-            container.innerHTML = '<div class="loading">Checking systems</div>';
+            clearCache();
+            await loadData();
+        }
+        
+        async function loadData() {
+            isLoading = true;
             
             try {
-                projectsData = await fetchProjectsData();
-                renderProjects(projectsData);
-                resetTimer();
+                const cached = getCache();
+                
+                if (cached) {
+                    allRepos = cached;
+                    updateApiStatus('success', `Loaded ${allRepos.length} repos from cache`);
+                } else {
+                    const githubRepos = await fetchGitHubRepos();
+                    allRepos = githubRepos.map(transformRepo);
+                    setCache(allRepos);
+                }
+                
+                filteredRepos = filterAndSortRepos();
+                renderProjects(filteredRepos, false);
+                startCacheTimer();
+                startLazyStatusChecking();
+                
             } catch (error) {
-                container.innerHTML = `<div class="error-message">Error loading data: ${error.message}</div>`;
+                document.getElementById('projects-container').innerHTML = `
+                    <div class="error-message">
+                        Error: ${error.message}<br>
+                        <button onclick="refreshData()" style="margin-top:15px">Try Again</button>
+                    </div>
+                `;
+            } finally {
+                isLoading = false;
             }
         }
         
-        function resetTimer() {
-            refreshTimer = CONFIG.refreshInterval;
-            document.getElementById('timer').textContent = refreshTimer;
-        }
-        
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                refreshTimer--;
-                document.getElementById('timer').textContent = refreshTimer;
-                
-                if (refreshTimer <= 0) {
-                    refreshData();
-                }
-            }, 1000);
-        }
-        
         function exportReport() {
-            const headers = ['Project Name', 'Status', 'Repository', 'Deployment', 'DNS', 'Site', 'Database', 'Files', 'Agent', 'Last Deployed', 'Checked At'];
-            const rows = projectsData.map(p => [
+            const headers = ['Name', 'Full Name', 'Description', 'Repository', 'Status', 'Language', 'Stars', 'Forks', 'Open Issues', 'Deployment', 'Subdomain', 'Agent', 'Created At', 'Updated At', 'Pushed At'];
+            const rows = allRepos.map(p => [
                 p.name,
-                p.status,
+                p.fullName,
+                p.description || '',
                 p.repo,
+                p.status,
+                p.language || '',
+                p.stars,
+                p.forks,
+                p.openIssues,
                 p.deployment,
-                p.checks.dns,
-                p.checks.site.status,
-                p.checks.database,
-                p.checks.files,
+                p.subdomain || '',
                 p.activeAgent || 'None',
-                p.lastDeployed || 'Never',
-                p.checkedAt
+                p.createdAt,
+                p.updatedAt,
+                p.pushedAt || ''
             ]);
             
-            const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const csv = [headers.join(','), ...rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(','))].join('\n');
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -838,13 +902,24 @@
         }
         
         // Event listeners
-        document.getElementById('search-input').addEventListener('input', () => renderProjects(projectsData));
-        document.getElementById('filter-select').addEventListener('change', () => renderProjects(projectsData));
+        document.getElementById('search-input').addEventListener('input', () => {
+            filteredRepos = filterAndSortRepos();
+            renderProjects(filteredRepos, false);
+        });
+        
+        document.getElementById('filter-select').addEventListener('change', () => {
+            filteredRepos = filterAndSortRepos();
+            renderProjects(filteredRepos, false);
+        });
+        
+        document.getElementById('sort-select').addEventListener('change', () => {
+            filteredRepos = filterAndSortRepos();
+            renderProjects(filteredRepos, false);
+        });
         
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            refreshData();
-            startTimer();
+            loadData();
         });
     </script>
 </body>
